@@ -15,10 +15,11 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
-app.use("/posts", require("./routes/Posts"));
 app.use("/auth", require("./routes/Auth"));
+app.use("/posts", require("./routes/Posts"));
 
 // Create tables
+User.createTable();
 BlogPost.createTable();
 
 app.listen(PORT, () => {
