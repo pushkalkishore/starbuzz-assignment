@@ -1,16 +1,31 @@
 import { useEffect, useState } from "react";
-
-const buttonContainerStyle = {
-  display: "flex",
-  justifyContent: "flex-end",
-  marginTop: "10px",
-};
+import { useRouter } from "next/router";
 
 const containerStyle = {
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
   padding: "20px",
+};
+
+const headerStyle = {
+  display: "flex",
+  justifyContent: "center",
+  width: "100%",
+  maxWidth: "600px",
+  marginBottom: "20px",
+};
+
+const logoutButtonStyle = {
+  position: "absolute",
+  top: "20px",
+  right: "20px",
+  padding: "5px 10px",
+  cursor: "pointer",
+  backgroundColor: "#ff4d4d",
+  color: "white",
+  border: "none",
+  borderRadius: "3px",
 };
 
 const postStyle = {
@@ -37,6 +52,12 @@ const contentStyle = {
   fontSize: "1em",
 };
 
+const buttonContainerStyle = {
+  display: "flex",
+  justifyContent: "flex-end",
+  marginTop: "10px",
+};
+
 const buttonStyle = {
   padding: "5px 10px",
   cursor: "pointer",
@@ -47,9 +68,6 @@ const buttonStyle = {
   transition: "background-color 0.3s",
 };
 
-const buttonHoverStyle = {
-  backgroundColor: "#005bb5",
-};
 const formStyle = {
   display: "flex",
   flexDirection: "column",
@@ -68,25 +86,33 @@ const Posts = () => {
   const [editPostId, setEditPostId] = useState(null);
   const [editTitle, setEditTitle] = useState("");
   const [editContent, setEditContent] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        const response = await fetch("http://localhost:3001/posts", {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        });
-        const data = await response.json();
-        setPosts(data);
-      } catch (error) {
-        console.error("Error fetching posts:", error);
-      }
-    };
-    fetchPosts();
+    const token = localStorage.getItem("token");
+    if (token) {
+      setIsLoggedIn(true);
+      const fetchPosts = async () => {
+        try {
+          const response = await fetch("http://localhost:3001/posts", {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          });
+          const data = await response.json();
+          setPosts(data);
+        } catch (error) {
+          console.error("Error fetching posts:", error);
+        }
+      };
+
+      fetchPosts();
+    } else {
+      router.push("/login");
+    }
   }, []);
 
   const handleEditClick = (post) => {
@@ -137,131 +163,82 @@ const Posts = () => {
     }
   };
 
-  //   return (
-  //     <div style={containerStyle}>
-  //       <h1>Posts</h1>
-  //       {posts.length > 0 ? (
-  //         posts.map((post) => (
-  //           <div style={postStyle}>
-  //             {editPostId === post.id ? (
-  //               <form onSubmit={handleUpdatePost} style={formStyle}>
-  //                 <input
-  //                   type="text"
-  //                   value={editTitle}
-  //                   onChange={(e) => setEditTitle(e.target.value)}
-  //                   style={inputStyle}
-  //                   placeholder="Title"
-  //                 />
-  //                 <textarea
-  //                   value={editContent}
-  //                   onChange={(e) => setEditContent(e.target.value)}
-  //                   style={inputStyle}
-  //                   placeholder="Content"
-  //                 />
-  //                 <button type="submit" style={buttonStyle}>
-  //                   Update
-  //                 </button>
-  //                 <button
-  //                   type="button"
-  //                   style={buttonStyle}
-  //                   onClick={() => setEditPostId(null)}
-  //                 >
-  //                   Cancel
-  //                 </button>
-  //               </form>
-  //             ) : (
-  //               <>
-  //                 <div style={titleStyle}>{post.title}</div>
-  //                 <div style={authorStyle}>
-  //                   By {post.author} on{" "}
-  //                   {new Date(post.created_at).toLocaleDateString()}
-  //                 </div>
-  //                 <div style={contentStyle}>{post.content}</div>
-  //                 <div style={buttonContainerStyle}>
-  //                   <button
-  //                     style={buttonStyle}
-  //                     onMouseOver={(e) =>
-  //                       (e.target.style.backgroundColor = "#005bb5")
-  //                     }
-  //                     onMouseOut={(e) =>
-  //                       (e.target.style.backgroundColor = "#0070f3")
-  //                     }
-  //                     onClick={() => handleEditClick(post)}
-  //                   >
-  //                     Edit
-  //                   </button>
-  //                 </div>
-  //               </>
-  //             )}
-  //           </div>
-  //         ))
-  //       ) : (
-  //         <p>No posts available.</p>
-  //       )}
-  //     </div>
-  //   );
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setIsLoggedIn(false);
+    router.push("/login");
+  };
 
   return (
-    <div style={containerStyle}>
-      <h1>Posts</h1>
-      {posts.length > 0 ? (
-        posts.map((post) => (
-          <div key={post.id} style={postStyle}>
-            {editPostId === post.id ? (
-              <form onSubmit={handleUpdatePost} style={formStyle}>
-                <input
-                  type="text"
-                  value={editTitle}
-                  onChange={(e) => setEditTitle(e.target.value)}
-                  style={inputStyle}
-                  placeholder="Title"
-                />
-                <textarea
-                  value={editContent}
-                  onChange={(e) => setEditContent(e.target.value)}
-                  style={inputStyle}
-                  placeholder="Content"
-                />
-                <button type="submit" style={buttonStyle}>
-                  Update
-                </button>
-                <button
-                  type="button"
-                  style={buttonStyle}
-                  onClick={() => setEditPostId(null)}
-                >
-                  Cancel
-                </button>
-              </form>
-            ) : (
-              <>
-                <div style={titleStyle}>{post.title}</div>
-                <div style={authorStyle}>
-                  By {post.author} on{" "}
-                  {new Date(post.created_at).toLocaleDateString()}
-                </div>
-                <div style={contentStyle}>{post.content}</div>
-                <div style={buttonContainerStyle}>
-                  <button
-                    style={buttonStyle}
-                    onMouseOver={(e) =>
-                      (e.target.style.backgroundColor = "#005bb5")
-                    }
-                    onMouseOut={(e) =>
-                      (e.target.style.backgroundColor = "#0070f3")
-                    }
-                    onClick={() => handleEditClick(post)}
-                  >
-                    Edit
-                  </button>
-                </div>
-              </>
-            )}
-          </div>
-        ))
-      ) : (
-        <p>No posts available.</p>
+    <div style={{ position: "relative" }}>
+      {isLoggedIn && (
+        <button style={logoutButtonStyle} onClick={handleLogout}>
+          Logout
+        </button>
       )}
+      <div style={containerStyle}>
+        <div style={headerStyle}>
+          <h1>Posts</h1>
+        </div>
+        {posts.length > 0 ? (
+          posts.map((post) => (
+            <div key={post.id} style={postStyle}>
+              {editPostId === post.id ? (
+                <form onSubmit={handleUpdatePost} style={formStyle}>
+                  <input
+                    type="text"
+                    value={editTitle}
+                    onChange={(e) => setEditTitle(e.target.value)}
+                    style={inputStyle}
+                    placeholder="Title"
+                  />
+                  <textarea
+                    value={editContent}
+                    onChange={(e) => setEditContent(e.target.value)}
+                    style={inputStyle}
+                    placeholder="Content"
+                  />
+                  <button type="submit" style={buttonStyle}>
+                    Update
+                  </button>
+                  <button
+                    type="button"
+                    style={buttonStyle}
+                    onClick={() => setEditPostId(null)}
+                  >
+                    Cancel
+                  </button>
+                </form>
+              ) : (
+                <>
+                  <div style={titleStyle}>{post.title}</div>
+                  <div style={authorStyle}>
+                    By {post.author} on{" "}
+                    {new Date(post.created_at).toLocaleDateString()}
+                  </div>
+                  <div style={contentStyle}>{post.content}</div>
+                  <div style={buttonContainerStyle}>
+                    <button
+                      style={buttonStyle}
+                      onMouseOver={(e) =>
+                        (e.target.style.backgroundColor = "#005bb5")
+                      }
+                      onMouseOut={(e) =>
+                        (e.target.style.backgroundColor = "#0070f3")
+                      }
+                      onClick={() => handleEditClick(post)}
+                    >
+                      Edit
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
+          ))
+        ) : (
+          <p>No posts available.</p>
+        )}
+      </div>
     </div>
   );
 };
