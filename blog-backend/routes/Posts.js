@@ -1,10 +1,12 @@
 // routes/posts.js
 const express = require("express");
 const BlogPost = require("../models/BlogPost");
+const authenticate = require("../middleware/AuthMiddleware");
+
 const router = express.Router();
 
-// Create post
-router.post("/", (req, res) => {
+// Create post (protected)
+router.post("/", authenticate, (req, res) => {
   const { title, content, author } = req.body;
   BlogPost.create(title, content, author, (err, results) => {
     if (err) return res.status(500).json({ error: "Database error" });
@@ -29,8 +31,8 @@ router.get("/:id", (req, res) => {
   });
 });
 
-// Update post
-router.put("/:id", (req, res) => {
+// Update post (protected)
+router.put("/:id", authenticate, (req, res) => {
   const { id } = req.params;
   const { title, content } = req.body;
   BlogPost.update(id, title, content, (err, results) => {
@@ -39,8 +41,8 @@ router.put("/:id", (req, res) => {
   });
 });
 
-// Delete post
-router.delete("/:id", (req, res) => {
+// Delete post (protected)
+router.delete("/:id", authenticate, (req, res) => {
   const { id } = req.params;
   BlogPost.delete(id, (err, results) => {
     if (err) return res.status(500).json({ error: "Database error" });
