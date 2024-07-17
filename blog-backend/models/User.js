@@ -28,7 +28,8 @@ const User = {
     `;
     connection.execute(sql, (err, results) => {
       if (err) throw err;
-      console.log("User table created:", results);
+      //   console.log("User table created:", results);
+      console.log("User table created:");
     });
   },
 
