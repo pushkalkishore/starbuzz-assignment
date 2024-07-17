@@ -29,6 +29,7 @@ const BlogPost = {
     connection.execute(sql, (err, results) => {
       if (err) throw err;
       // console.log("BlogPost table created:", results);
+      console.log("BlogPost table created:");
     });
   },
 
