@@ -4,7 +4,7 @@ export default function Home() {
   return (
     <div className="container">
       <header className="header">
-        <h1>Starbuzz.ai Assignment</h1>
+        <h1>Starbuzz.ai</h1>
         <nav className="nav">
           <Link href="/login">Login</Link>
           <Link href="/signup">Signup</Link>
@@ -22,7 +22,12 @@ export default function Home() {
       </main>
 
       <footer className="footer">
-        <p>Powered by Next.js</p>
+        <p>
+          Made by{" "}
+          <a href="https://www.linkedin.com/in/your-linkedin-profile-url">
+            Pushkal Kishore
+          </a>
+        </p>
       </footer>
     </div>
   );
