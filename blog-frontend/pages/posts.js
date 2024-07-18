@@ -124,6 +124,38 @@ const Posts = () => {
     setEditContent(post.content);
   };
 
+  const handleNewPost = async (e) => {
+    e.preventDefault();
+
+    try {
+      const token = localStorage.getItem("token");
+      console.log(token);
+      const response = await fetch("http://localhost:3001/posts", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: newTitle,
+          content: newContent,
+          author: newAuthor,
+        }),
+      });
+
+      if (response.ok) {
+        const newPost = await response.json();
+        setPosts((prevPosts) => [...prevPosts, newPost]);
+        setNewTitle("");
+        setNewContent("");
+      } else {
+        console.error("Error creating new post");
+      }
+    } catch (error) {
+      console.error("Error creating new post:", error);
+    }
+  };
+
   const handleUpdatePost = async (e) => {
     e.preventDefault();
 
@@ -166,35 +198,24 @@ const Posts = () => {
     }
   };
 
-  const handleNewPost = async (e) => {
-    e.preventDefault();
-
+  const handleDeletePost = async (postId) => {
     try {
       const token = localStorage.getItem("token");
-      console.log(token);
-      const response = await fetch("http://localhost:3001/posts", {
-        method: "POST",
+      const response = await fetch(`http://localhost:3001/posts/${postId}`, {
+        method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          title: newTitle,
-          content: newContent,
-          author: newAuthor,
-        }),
       });
 
       if (response.ok) {
-        const newPost = await response.json();
-        setPosts((prevPosts) => [...prevPosts, newPost]);
-        setNewTitle("");
-        setNewContent("");
+        setPosts((prevPosts) => prevPosts.filter((post) => post.id !== postId));
       } else {
-        console.error("Error creating new post");
+        console.error("Error deleting post");
       }
     } catch (error) {
-      console.error("Error creating new post:", error);
+      console.error("Error deleting post:", error);
     }
   };
 
@@ -253,6 +274,18 @@ const Posts = () => {
                   </div>
                   <div style={contentStyle}>{post.content}</div>
                   <div style={buttonContainerStyle}>
+                    <button
+                      style={{ ...buttonStyle, marginRight: "10px" }}
+                      onMouseOver={(e) =>
+                        (e.target.style.backgroundColor = "#e60000")
+                      }
+                      onMouseOut={(e) =>
+                        (e.target.style.backgroundColor = "#ff4d4d")
+                      }
+                      onClick={() => handleDeletePost(post.id)}
+                    >
+                      Delete
+                    </button>
                     <button
                       style={buttonStyle}
                       onMouseOver={(e) =>
