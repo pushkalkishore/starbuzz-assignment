@@ -53,10 +53,8 @@ This project is a full-stack blogging platform where users can sign up, log in, 
      ```
 5. Start the backend server:
    ```bash
-   npm start
+   npm run dev
    ```
-
-````
 
 ### Frontend
 
@@ -141,4 +139,7 @@ starbuzz_assignment/
 This project was built as part of an assignment to create a full-stack blogging platform. Special thanks to the authors of the libraries and frameworks used.
 
 ---
-````
+
+```
+
+```
