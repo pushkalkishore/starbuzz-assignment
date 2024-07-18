@@ -122,24 +122,3 @@ starbuzz_assignment/
     ├── .env
     └── package.json
 ```
-
-## Environment Variables
-
-### Backend
-
-- `JWT_SECRET`: Secret key for JWT
-- `DB_CONNECTION_STRING`: Connection string for MongoDB/PostgreSQL
-
-### Frontend
-
-- `NEXT_PUBLIC_API_URL`: API URL for backend server
-
-## Acknowledgements
-
-This project was built as part of an assignment to create a full-stack blogging platform. Special thanks to the authors of the libraries and frameworks used.
-
----
-
-```
-
-```
