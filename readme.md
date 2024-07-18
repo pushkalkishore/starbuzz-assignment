@@ -24,7 +24,7 @@ This project is a full-stack blogging platform where users can sign up, log in, 
 ### Prerequisites
 
 - Node.js and npm installed on your machine
-- MongoDB/PostgreSQL setup
+- MySQL setup
 
 ### Backend
 
@@ -44,13 +44,19 @@ This project is a full-stack blogging platform where users can sign up, log in, 
    - Create a `.env` file in the `blog-backend` directory.
    - Add the following variables:
      ```env
-     JWT_SECRET=your_jwt_secret
-     DB_CONNECTION_STRING=your_database_connection_string
+     DB_HOST=localhost
+     DB_USER=root
+     DB_PASSWORD=password
+     DB_NAME=starbuzz
+     PORT=3001
+     JWT_SECRET=your_secret_key_here
      ```
 5. Start the backend server:
    ```bash
    npm start
    ```
+
+````
 
 ### Frontend
 
@@ -135,3 +141,4 @@ starbuzz_assignment/
 This project was built as part of an assignment to create a full-stack blogging platform. Special thanks to the authors of the libraries and frameworks used.
 
 ---
+````
