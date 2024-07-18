@@ -86,6 +86,9 @@ const Posts = () => {
   const [editPostId, setEditPostId] = useState(null);
   const [editTitle, setEditTitle] = useState("");
   const [editContent, setEditContent] = useState("");
+  const [newTitle, setNewTitle] = useState("");
+  const [newContent, setNewContent] = useState("");
+  const [newAuthor, setNewAuthor] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const router = useRouter();
 
@@ -160,6 +163,38 @@ const Posts = () => {
       }
     } catch (error) {
       console.error("Error updating post:", error);
+    }
+  };
+
+  const handleNewPost = async (e) => {
+    e.preventDefault();
+
+    try {
+      const token = localStorage.getItem("token");
+      console.log(token);
+      const response = await fetch("http://localhost:3001/posts", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: newTitle,
+          content: newContent,
+          author: newAuthor,
+        }),
+      });
+
+      if (response.ok) {
+        const newPost = await response.json();
+        setPosts((prevPosts) => [...prevPosts, newPost]);
+        setNewTitle("");
+        setNewContent("");
+      } else {
+        console.error("Error creating new post");
+      }
+    } catch (error) {
+      console.error("Error creating new post:", error);
     }
   };
 
@@ -238,6 +273,31 @@ const Posts = () => {
         ) : (
           <p>No posts available.</p>
         )}
+        <form onSubmit={handleNewPost} style={formStyle}>
+          <input
+            type="text"
+            value={newTitle}
+            onChange={(e) => setNewTitle(e.target.value)}
+            style={inputStyle}
+            placeholder="New Post Title"
+          />
+          <textarea
+            value={newContent}
+            onChange={(e) => setNewContent(e.target.value)}
+            style={inputStyle}
+            placeholder="New Post Content"
+          />
+          <input
+            type="text"
+            value={newAuthor}
+            onChange={(e) => setNewAuthor(e.target.value)}
+            style={inputStyle}
+            placeholder="Author"
+          />
+          <button type="submit" style={buttonStyle}>
+            Add New Post
+          </button>
+        </form>
       </div>
     </div>
   );
