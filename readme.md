@@ -98,14 +98,12 @@ starbuzz_assignment/
 ├── blog-backend/
 │   ├── models/
 │   ├── routes/
-│   ├── controllers/
 │   ├── middlewares/
 │   ├── .env
 │   ├── server.js
 │   └── package.json
 └── blog-frontend/
     ├── pages/
-    ├── components/
     ├── styles/
     ├── .env
     └── package.json
