@@ -24,7 +24,7 @@ export default function Home() {
       <footer className="footer">
         <p>
           Made by{" "}
-          <a href="https://www.linkedin.com/in/your-linkedin-profile-url">
+          <a href="https://www.linkedin.com/in/kishorepushkal">
             Pushkal Kishore
           </a>
         </p>
