@@ -91,11 +91,6 @@ This project is a full-stack blogging platform where users can sign up, log in, 
 - `PUT /api/posts/:id`: Update a post
 - `DELETE /api/posts/:id`: Delete a post
 
-### Comments
-
-- `POST /api/comments`: Add a comment to a post
-- `GET /api/comments/:postId`: Get all comments for a post
-
 ## Project Structure
 
 ```bash
