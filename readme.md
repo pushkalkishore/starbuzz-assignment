@@ -1,6 +1,6 @@
 # Full-Stack Blogging Platform
 
-This project is a full-stack blogging platform where users can sign up, log in, write blog posts, and comment on posts by other users. Users can view, edit, and delete their posts.
+This project is a full-stack blogging platform where users can sign up, log in, write blog posts. Users can view, edit, and delete their posts.
 
 ## Table of Contents
 
