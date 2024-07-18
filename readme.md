@@ -65,13 +65,7 @@ This project is a full-stack blogging platform where users can sign up, log in, 
    ```bash
    npm install
    ```
-3. Set up environment variables:
-   - Create a `.env` file in the `blog-frontend` directory.
-   - Add the following variables:
-     ```env
-     NEXT_PUBLIC_API_URL=http://localhost:5000/api
-     ```
-4. Start the frontend server:
+3. Start the frontend server:
    ```bash
    npm run dev
    ```
