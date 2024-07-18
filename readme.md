@@ -78,7 +78,6 @@ This project is a full-stack blogging platform where users can sign up, log in, 
 1. Open your browser and navigate to `http://localhost:3000`.
 2. Sign up or log in to your account.
 3. Create, edit, and delete blog posts.
-4. Comment on other users' posts.
 
 ## API Endpoints
 
@@ -136,5 +135,3 @@ starbuzz_assignment/
 This project was built as part of an assignment to create a full-stack blogging platform. Special thanks to the authors of the libraries and frameworks used.
 
 ---
-
-Feel free to modify any sections or add more details as needed. Once you're satisfied, you can save this as `README.md` in the root directory of your project.
