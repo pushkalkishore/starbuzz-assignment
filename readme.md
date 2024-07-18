@@ -9,8 +9,7 @@ This project is a full-stack blogging platform where users can sign up, log in, 
 - [Usage](#usage)
 - [API Endpoints](#api-endpoints)
 - [Project Structure](#project-structure)
-- [Environment Variables](#environment-variables)
-- [Acknowledgements](#acknowledgements)
+- [Project Demo](#project-demo)
 
 ## Features
 
@@ -122,3 +121,7 @@ starbuzz_assignment/
     ├── .env
     └── package.json
 ```
+
+# Project Demo
+
+![Project Demo](demo.gif)
